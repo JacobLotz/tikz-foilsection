@@ -1,0 +1,107 @@
+% File which contains parts of the figures which can be used
+% to create different figures such as hydrofoils and vectors
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% General style
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\color{gray!30}  % Used color
+\def\linethickness{thin} % Standard line thickness
+\def\chord{1} % Chord of hydrofoil
+\def\scalewave{1} % Chord of hydrofoil
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Hydrofoil
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\t{0.12*\chord} % Thickness of hydrofoil
+\def\ct{0.33} % Center of rotation
+\def\aoa{-5} % Standard angle of attack
+\def\hydrofoil{
+%Hydrofoil
+\filldraw[black, \linethickness, fill=\color]
+(\chord,0) .. controls (0.25*\chord,  \t) and  (0,  \t) .. (0,0) .. controls (0, -\t) and (0.25*\chord, -\t)  .. cycle ;
+%Center or rotation
+\draw (\ct*\chord,0) circle(\chord/100)[fill];
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Vortex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\vr{0.0002*\chord} %Vortex radius
+\def\vortex{\draw[domain=0:25.1327,variable=\tt,smooth,samples=75, -, \linethickness]
+        plot ({\tt r}: {\vr*\tt*\tt});}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Pitch arrow
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\a{115} % Cut off angle for pitch arrow
+\def\r{1*\chord} % Radius of pitch arrow
+\def\pitcharrow{
+\draw[\linethickness, stealth-stealth] ({\r*cos(\a)+\ct*\chord},{\r*sin(\a)}) arc (\a:{360-\a}:\r);}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Heave arrows
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\heavearrow{
+\draw[\linethickness, -stealth] (\ct*\chord, 1.5*\t) -- (\ct*\chord, 0.5*\chord);
+\draw[\linethickness, -stealth] (\ct*\chord, -1.5*\t) -- (\ct*\chord, -0.5*\chord);}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Bichromatic wave
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Input
+\def\waveampl{0.1*\chord}
+\def\wavestart{-0.5*\chord}
+\def\waveend{4.5*\chord}
+\def\wavelengthone{\scalewave*\chord}
+\def\time{1.0}
+
+% Calculated
+\def\gravity{9.81}
+\def\wavenumberone{2*pi/\wavelengthone}
+\def\wavenumbertwo{2*pi/(2*\wavelengthone)}
+\def\wavefreqone{sqrt(\wavenumberone/\gravity)}
+\def\wavefreqtwo{sqrt(\wavenumbertwo/\gravity)}
+
+
+\def\bichromaticwave{
+\draw[\linethickness] plot[domain=\wavestart:\waveend, samples=100]  
+(\x,{\waveampl * (sin((\x*\wavenumberone + \wavefreqone * \time) r) + (sin((\x*\wavenumbertwo + + \wavefreqtwo * \time) r))});
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wake line
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wake line starts from trailing edge of hydrofoil with standard \aoa
+\def\wakeystart{(1-\ct) * sin(\aoa)}
+\def\wakeyend{0.2*\chord}
+\def\wakeline{
+\draw[black, \linethickness, dashed]
+(\chord,{\wakeystart}) .. controls (1.25*\chord,  -0.5*\wakeyend) and  (2*\chord,  -\wakeyend) .. (3*\chord,-\wakeyend);}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lift and drag vectors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\liftvector{
+\draw[\linethickness, -stealth] (\ct*\chord, 0) -- (\ct*\chord, 0.5*\chord);}
+
+\def\dragvector{
+\draw[\linethickness, -stealth] (\ct*\chord, 0) -- ({(\ct+0.25)*\chord}, 0);}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Angle of attack lines
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\raoa{\chord}
+\def\aoalines{
+\draw[\linethickness] ({(\ct-1)*\chord},0) arc (180:{180+\aoa}:\raoa);
+\draw[\linethickness, densely dotted] (\ct*\chord, 0) -- ({(\ct-1)*\chord}, 0);
+\draw[\linethickness, densely dotted] (\ct*\chord, 0) -- ({(\ct)*\chord -\raoa*cos(-\aoa)},  {\raoa*sin(-\aoa)});}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Inflow vector
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\inflowvector{
+\draw[\linethickness, -to] (-1.25*\chord, 0.25*\chord) -- ({(-\chord}, 0.25*\chord);
+\draw[\linethickness, -to] (-1.25*\chord, 0.1*\chord) -- ({(-\chord}, 0.1*\chord);
+\draw[\linethickness, -to] (-1.25*\chord, 0.-0.05*\chord) -- ({(-\chord}, -0.05*\chord);}
+

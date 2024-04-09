@@ -1,0 +1,44 @@
+\documentclass[preview]{standalone}
+\usepackage{tikz}
+\begin{document}%
+\input{definitions.tex}%
+\begin{tikzpicture}
+
+	\begin{scope}[shift={(0,\chord)}]
+		\bichromaticwave
+	\end{scope}
+
+	% 1st hydrofoil
+	\begin{scope}[
+	rotate around={\aoa:(\ct*\chord,0)}]
+		\hydrofoil
+	\end{scope}
+
+	% 2nd hydrofoil
+	%\begin{scope}[
+	%shift={(3*\chord,0)},
+	%rotate around={\aoa:(\ct*\chord,0)}]
+	%	\hydrofoil
+	%\end{scope}
+
+	% Inflow arrows
+	\begin{scope}[shift={(0,0)}]
+		\inflowvector
+	\end{scope}
+
+
+	% Vortices
+	\begin{scope}[shift={(1.5*\chord,0.1*\chord)}]
+		\vortex
+	\end{scope}
+
+	\begin{scope}[shift={(2.0*\chord,-0.1*\chord)},yscale=-1,xscale=1,rotate = 315]
+		\vortex
+	\end{scope}
+
+	\begin{scope}[shift={(2.5*\chord,0.1*\chord)}, rotate = 270]
+		\vortex
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}

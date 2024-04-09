@@ -1,0 +1,28 @@
+\documentclass[preview]{standalone}
+\usepackage{tikz}
+\begin{document}%
+\input{definitions.tex}%
+\begin{tikzpicture}
+
+	% Hydrofoil
+	\begin{scope}[
+	rotate around={\aoa:(\ct*\chord,0)}]
+		\hydrofoil
+	\end{scope}
+
+	\begin{scope}[shift={(0,0)}]
+		\aoalines
+	\end{scope}
+
+	% Lift and drag
+	\begin{scope}[shift={(0,0)}]
+		\liftvector
+		\dragvector
+	\end{scope}
+
+	\begin{scope}[shift={(0,0)}]
+		\inflowvector
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}

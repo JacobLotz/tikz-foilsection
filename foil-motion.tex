@@ -1,0 +1,24 @@
+\documentclass[preview]{standalone}
+\usepackage{tikz}
+\begin{document}%
+\input{definitions.tex}%
+\begin{tikzpicture}
+
+	% Hydrofoil
+	\begin{scope}
+		\hydrofoil
+	\end{scope}
+
+	% Heave arrows
+	\begin{scope}[shift={(0,0)}]
+		\heavearrow
+	\end{scope}
+
+	% Pitch motion arrows
+	\begin{scope}[shift={(0,0)}]
+		\pitcharrow
+	\end{scope}
+
+\end{tikzpicture}
+\end{document}
+
